@@ -1,4 +1,4 @@
-Shader "Hidden/Color Curve"
+Shader "Hidden/ColorCurve"
 {
     Properties
     {
