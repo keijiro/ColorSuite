@@ -29,27 +29,38 @@ public class ColorCurveEditor : Editor
     SerializedProperty propGCurve;
     SerializedProperty propBCurve;
     SerializedProperty propLCurve;
+
     SerializedProperty propBrightness;
     SerializedProperty propSaturation;
     SerializedProperty propContrast;
 
+    SerializedProperty propTonemapping;
+    SerializedProperty propExposure;
+
     void OnEnable()
     {
-        propRCurve     = serializedObject.FindProperty("_rCurve");
-        propGCurve     = serializedObject.FindProperty("_gCurve");
-        propBCurve     = serializedObject.FindProperty("_bCurve");
-        propLCurve     = serializedObject.FindProperty("_lCurve");
+        propRCurve = serializedObject.FindProperty("_rCurve");
+        propGCurve = serializedObject.FindProperty("_gCurve");
+        propBCurve = serializedObject.FindProperty("_bCurve");
+        propLCurve = serializedObject.FindProperty("_lCurve");
+
         propBrightness = serializedObject.FindProperty("_brightness");
         propSaturation = serializedObject.FindProperty("_saturation");
         propContrast   = serializedObject.FindProperty("_contrast");
+
+        propTonemapping = serializedObject.FindProperty("_tonemapping");
+        propExposure    = serializedObject.FindProperty("_exposure");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
+
+        EditorGUILayout.PropertyField(propTonemapping);
+        if (propTonemapping.hasMultipleDifferentValues || propTonemapping.boolValue)
+            EditorGUILayout.Slider(propExposure, 0, 5);
         
         EditorGUILayout.LabelField("Curves (Red, Green, Blue, Luminance)");
-
         EditorGUILayout.BeginHorizontal();
         var doubleHeight = GUILayout.Height(EditorGUIUtility.singleLineHeight * 2);
         EditorGUILayout.PropertyField(propRCurve, GUIContent.none, doubleHeight);

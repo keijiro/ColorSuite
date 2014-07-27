@@ -26,49 +26,58 @@ using System.Collections;
 [AddComponentMenu("Image Effects/Color Adjustments/Color Curve")]
 public class ColorCurve : MonoBehaviour
 {
-    // Curve parameters.
+    // Curve objects.
     [SerializeField] AnimationCurve _rCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [SerializeField] AnimationCurve _gCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [SerializeField] AnimationCurve _bCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [SerializeField] AnimationCurve _lCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    [SerializeField] float _brightness = 0.0f;
-    [SerializeField] float _saturation = 1.0f;
-    [SerializeField] float _contrast   = 1.0f;
 
-    // Public interfaces for the parameters.
     public AnimationCurve redCurve {
         get { return _rCurve; }
         set { _rCurve = value; UpdateParameters(); }
     }
-
     public AnimationCurve greenCurve {
         get { return _gCurve; }
         set { _gCurve = value; UpdateParameters(); }
     }
-
     public AnimationCurve blueCurve {
         get { return _bCurve; }
         set { _bCurve = value; UpdateParameters(); }
     }
-
     public AnimationCurve luminanceCurve {
         get { return _lCurve; }
         set { _lCurve = value; UpdateParameters(); }
     }
 
+    // Adjustment parameters.
+    [SerializeField] float _brightness = 0.0f;
+    [SerializeField] float _contrast   = 1.0f;
+    [SerializeField] float _saturation = 1.0f;
+
     public float brightness {
         get { return _brightness; }
         set { _brightness = value; UpdateParameters(); }
     }
-
-    public float saturation {
-        get { return _saturation; }
-        set { _saturation = value; UpdateParameters(); }
-    }
-
     public float contrast {
         get { return _contrast; }
         set { _contrast = value; UpdateParameters(); }
+    }
+    public float saturation {
+        get { return _saturation; }
+        set { _saturation = value; } // no UpdateParameters
+    }
+
+    // Tonemapping parameters.
+    [SerializeField] bool _tonemapping = false;
+    [SerializeField] float _exposure   = 1.8f;
+
+    public bool tonemapping {
+        get { return _tonemapping; }
+        set { _tonemapping = value; }
+    }
+    public float exposure {
+        get { return _exposure; }
+        set { _exposure = value; }
     }
 
     // Temporary objects.
@@ -95,9 +104,9 @@ public class ColorCurve : MonoBehaviour
         var bt = _brightness > 0 ? 1.0f : -1.0f;
         var bp = Mathf.Abs(_brightness);
 
-        for (var x = 0; x < 256; x++)
+        for (var x = 0; x < texture.width; x++)
         {
-            var u = 1.0f / 255 * x;
+            var u = 1.0f / (texture.width - 1) * x;
             var r = Mathf.Lerp(_lCurve.Evaluate((_rCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
             var g = Mathf.Lerp(_lCurve.Evaluate((_gCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
             var b = Mathf.Lerp(_lCurve.Evaluate((_bCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
@@ -119,6 +128,14 @@ public class ColorCurve : MonoBehaviour
         material.SetTexture("_Curves", texture);
         material.SetFloat("_Saturation", _saturation);
 
-        Graphics.Blit(source, destination, material);           
+        if (_tonemapping)
+        {
+            material.SetFloat("_Exposure", _exposure);
+            Graphics.Blit(source, destination, material, 1);
+        }
+        else
+        {
+            Graphics.Blit(source, destination, material, 0);
+        }
     }
 }
