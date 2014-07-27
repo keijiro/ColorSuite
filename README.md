@@ -5,17 +5,18 @@ ColorSuite
 
 ![Screenshot 2](http://keijiro.github.io/ColorSuite/screenshot2.png)
 
-ColorSuite is an color adjustment image effect for Unity, which provides multiple
-functions in a single component.
+ColorSuite is an color adjustment image effect for Unity, which manages
+multiple color adjustment tasks in a single component.
 
-- Tonemapping (simplified Reinhard)
-- Curves (red, green, blue and luminance)
-- Brightness, contrast and saturation control
+- Tone mapping (simplified Reinhard operator)
+- Tone curve (red, green, blue and luminance)
+- Brightness, saturation and contrast control
 - Vignetting
 
-These functions are implemented in a single shader, and unused functions are
-automatically removed from the shader using the multiple shader compilation
-technique. It guarantees the best performance in any case.
+These functions are implemented in a single one-pass shader. In case you
+dont't use some functions, it strip out unused functions automatically
+using the multiple shader compilation technique, and guarantees the best
+performance in any case.
 
 License
 -------
