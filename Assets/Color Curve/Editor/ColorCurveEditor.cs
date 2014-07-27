@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2013, 2014 Keijiro Takahashi
+// Copyright (C) 2014 Keijiro Takahashi
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -35,26 +35,27 @@ public class ColorCurveEditor : Editor
 
     void OnEnable()
     {
-        propRCurve     = serializedObject.FindProperty("rCurve");
-        propGCurve     = serializedObject.FindProperty("gCurve");
-        propBCurve     = serializedObject.FindProperty("bCurve");
-        propLCurve     = serializedObject.FindProperty("lCurve");
-        propBrightness = serializedObject.FindProperty("brightness");
-        propSaturation = serializedObject.FindProperty("saturation");
-        propContrast   = serializedObject.FindProperty("contrast");
+        propRCurve     = serializedObject.FindProperty("_rCurve");
+        propGCurve     = serializedObject.FindProperty("_gCurve");
+        propBCurve     = serializedObject.FindProperty("_bCurve");
+        propLCurve     = serializedObject.FindProperty("_lCurve");
+        propBrightness = serializedObject.FindProperty("_brightness");
+        propSaturation = serializedObject.FindProperty("_saturation");
+        propContrast   = serializedObject.FindProperty("_contrast");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
         
-        EditorGUILayout.LabelField("Curves (Red, Green, Blue, Luminosity)");
+        EditorGUILayout.LabelField("Curves (Red, Green, Blue, Luminance)");
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(propRCurve, GUIContent.none);
-        EditorGUILayout.PropertyField(propGCurve, GUIContent.none);
-        EditorGUILayout.PropertyField(propBCurve, GUIContent.none);
-        EditorGUILayout.PropertyField(propLCurve, GUIContent.none);
+        var doubleHeight = GUILayout.Height(EditorGUIUtility.singleLineHeight * 2);
+        EditorGUILayout.PropertyField(propRCurve, GUIContent.none, doubleHeight);
+        EditorGUILayout.PropertyField(propGCurve, GUIContent.none, doubleHeight);
+        EditorGUILayout.PropertyField(propBCurve, GUIContent.none, doubleHeight);
+        EditorGUILayout.PropertyField(propLCurve, GUIContent.none, doubleHeight);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.Slider(propBrightness, -1, 1);
