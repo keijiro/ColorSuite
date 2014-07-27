@@ -22,8 +22,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(ColorCurve)), CanEditMultipleObjects]
-public class ColorCurveEditor : Editor
+[CustomEditor(typeof(ColorSuite)), CanEditMultipleObjects]
+public class ColorSuiteEditor : Editor
 {
     SerializedProperty propRCurve;
     SerializedProperty propGCurve;
@@ -83,6 +83,6 @@ public class ColorCurveEditor : Editor
 
         if (GUI.changed)
             foreach (var t in targets)
-                (t as ColorCurve).SendMessage("UpdateParameters");
+                (t as ColorSuite).SendMessage("UpdateParameters");
     }
 }

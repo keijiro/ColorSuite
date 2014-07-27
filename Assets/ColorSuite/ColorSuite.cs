@@ -23,8 +23,8 @@ using System.Collections;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
-[AddComponentMenu("Image Effects/Color Adjustments/Color Curve")]
-public class ColorCurve : MonoBehaviour
+[AddComponentMenu("Image Effects/Color Adjustments/Color Suite")]
+public class ColorSuite : MonoBehaviour
 {
     // Curve objects.
     [SerializeField] AnimationCurve _rCurve = AnimationCurve.Linear(0, 0, 1, 1);
@@ -96,7 +96,7 @@ public class ColorCurve : MonoBehaviour
     {
         if (material != null && texture != null) return;
 
-        material = new Material(Shader.Find("Hidden/ColorCurve"));
+        material = new Material(Shader.Find("Hidden/ColorSuite"));
         material.hideFlags = HideFlags.DontSave;
 
         texture = new Texture2D(256, 1, TextureFormat.ARGB32, false, true);
