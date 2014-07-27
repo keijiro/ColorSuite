@@ -80,6 +80,14 @@ public class ColorCurve : MonoBehaviour
         set { _exposure = value; }
     }
 
+    // Vignette parameters.
+    [SerializeField] float _vignette = 0.0f;
+
+    public float vignette {
+        get { return _vignette; }
+        set { _vignette = value; }
+    }
+
     // Temporary objects.
     Material material;
     Texture2D texture;
@@ -130,12 +138,20 @@ public class ColorCurve : MonoBehaviour
 
         if (_tonemapping)
         {
+            material.EnableKeyword("TONEMAPPING_ON");
             material.SetFloat("_Exposure", _exposure);
-            Graphics.Blit(source, destination, material, 1);
         }
         else
+            material.DisableKeyword("TONEMAPPING_ON");
+
+        if (_vignette > 0.0f)
         {
-            Graphics.Blit(source, destination, material, 0);
+            material.EnableKeyword("VIGNETTE_ON");
+            material.SetFloat("_Vignette", _vignette);
         }
+        else
+            material.DisableKeyword("VIGNETTE_ON");
+
+        Graphics.Blit(source, destination, material);
     }
 }

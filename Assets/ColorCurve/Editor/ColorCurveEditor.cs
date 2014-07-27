@@ -37,6 +37,8 @@ public class ColorCurveEditor : Editor
     SerializedProperty propTonemapping;
     SerializedProperty propExposure;
 
+    SerializedProperty propVignette;
+
     void OnEnable()
     {
         propRCurve = serializedObject.FindProperty("_rCurve");
@@ -50,6 +52,8 @@ public class ColorCurveEditor : Editor
 
         propTonemapping = serializedObject.FindProperty("_tonemapping");
         propExposure    = serializedObject.FindProperty("_exposure");
+
+        propVignette = serializedObject.FindProperty("_vignette");
     }
 
     public override void OnInspectorGUI()
@@ -59,6 +63,8 @@ public class ColorCurveEditor : Editor
         EditorGUILayout.PropertyField(propTonemapping);
         if (propTonemapping.hasMultipleDifferentValues || propTonemapping.boolValue)
             EditorGUILayout.Slider(propExposure, 0, 5);
+
+        EditorGUILayout.Slider(propVignette, 0, 10);
         
         EditorGUILayout.LabelField("Curves (Red, Green, Blue, Luminance)");
         EditorGUILayout.BeginHorizontal();

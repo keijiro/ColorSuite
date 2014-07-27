@@ -538,18 +538,18 @@ MonoBehaviour:
       tangentMode: 10
     - time: .1904957
       value: .167567998
-      inSlope: 1.0134933
-      outSlope: 1.0134933
+      inSlope: .957024634
+      outSlope: .957024634
       tangentMode: 10
-    - time: .673271418
-      value: .771208882
-      inSlope: .988558054
-      outSlope: .988558054
+    - time: .690474927
+      value: .736253023
+      inSlope: 1.00875306
+      outSlope: 1.00875306
       tangentMode: 10
     - time: 1
       value: 1.00866258
-      inSlope: .726761341
-      outSlope: .726761341
+      inSlope: .880088806
+      outSlope: .880088806
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -595,9 +595,10 @@ MonoBehaviour:
     m_PostInfinity: 2
   _brightness: .0399999991
   _contrast: 1.25999999
-  _saturation: 1.24000001
+  _saturation: 1.21000004
   _tonemapping: 1
-  _exposure: 1.57000005
+  _exposure: 1.62
+  _vignette: 4.42999983
 --- !u!81 &1458254039
 AudioListener:
   m_ObjectHideFlags: 0
