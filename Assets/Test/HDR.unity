@@ -599,6 +599,7 @@ MonoBehaviour:
   _tonemapping: 1
   _exposure: 1.62
   _vignette: 4.42999983
+  shader: {fileID: 4800000, guid: dc9775b65c52747e69fc4c854c00d696, type: 3}
 --- !u!81 &1458254039
 AudioListener:
   m_ObjectHideFlags: 0

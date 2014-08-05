@@ -88,6 +88,9 @@ public class ColorSuite : MonoBehaviour
         set { _vignette = value; }
     }
 
+    // Reference to the shader.
+    [SerializeField] Shader shader;
+
     // Temporary objects.
     Material material;
     Texture2D texture;
@@ -96,7 +99,7 @@ public class ColorSuite : MonoBehaviour
     {
         if (material != null && texture != null) return;
 
-        material = new Material(Shader.Find("Hidden/ColorSuite"));
+        material = new Material(shader);
         material.hideFlags = HideFlags.DontSave;
 
         texture = new Texture2D(256, 1, TextureFormat.ARGB32, false, true);
