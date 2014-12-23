@@ -29,15 +29,33 @@ Shader "Hidden/ColorSuite"
     
     CGINCLUDE
 
-    // Multi compilation options (vignette/tonemapping)
+    // Multi compilation options (tonemap/vignette/dither)
     #pragma multi_compile TONEMAPPING_OFF TONEMAPPING_ON
     #pragma multi_compile VIGNETTE_OFF VIGNETTE_ON
+    #pragma multi_compile DITHER_OFF DITHER_ORDERED DITHER_TRIANGULAR
+    #pragma multi_compile LINEAR_OFF LINEAR_ON
 
     #include "UnityCG.cginc"
     
     sampler2D _MainTex;
     sampler2D _Curves;
     float _Saturation;
+    float2 _MainTex_TexelSize;
+
+    // Color space conversion between sRGB and linear.
+    // http://chilliant.blogspot.jp/2012/08/srgb-approximations-for-hlsl.html
+    float3 srgb_to_linear(float3 s)
+    {
+        return s * (s * (s * 0.305306011 + 0.682171111) + 0.012522878);
+    }
+    float3 linear_to_srgb(float3 s)
+    {
+        s = saturate(s);
+        float3 s1 = sqrt(s);
+        float3 s2 = sqrt(s1);
+        float3 s3 = sqrt(s2);
+        return 0.585122381 * s1 + 0.783140355 * s2 - 0.368262736 * s3;
+    }
 
 #if TONEMAPPING_ON
     // Reinhard tonemapping operator
@@ -56,37 +74,36 @@ Shader "Hidden/ColorSuite"
     float vignette(float2 uv)
     {
         float2 cuv = (uv - 0.5) * 2;
-        return 1 - dot(cuv, cuv) * _Vignette * 0.1;
+        return max(1 - dot(cuv, cuv) * _Vignette * 0.1, 0.0);
     }
 #endif
 
-// sRGB and linear color space conversion.
-// http://chilliant.blogspot.jp/2012/08/srgb-approximations-for-hlsl.html
-
-float3 srgb_to_linear(float3 s)
-{
-    return s * (s * (s * 0.305306011 + 0.682171111) + 0.012522878);
-}
-
-float3 linear_to_srgb(float3 s)
-{
-    s = saturate(s);
-    float3 s1 = sqrt(s);
-    float3 s2 = sqrt(s1);
-    float3 s3 = sqrt(s2);
-    return 0.585122381 * s1 + 0.783140355 * s2 - 0.368262736 * s3;
-}
-
-    float nrand(float2 n, float hash)
+#if DITHER_ORDERED
+    // Interleaved gradient function
+    // http://www.iryoku.com/next-generation-post-processing-in-call-of-duty-advanced-warfare
+    float interleaved_gradient(float2 uv)
     {
-        return frac(sin(dot(n, float2(12.9898f, 78.233f))) * hash);
+        float3 magic = float3(0.06711056, 0.00583715, 52.9829189);
+        return frac(magic.z * frac(dot(uv, magic.xy)));
     }
-
-    float3 nrand(float2 n)
+    float3 dither(float2 uv)
     {
-        float l = (nrand(n, 43758.5453f) + nrand(n, 43759.5453f) - 0.5f) / 255;
-        return float3(1, 1, 1) * l;
+        return float3(interleaved_gradient(uv / _MainTex_TexelSize) / 255);
     }
+#endif
+
+#if DITHER_TRIANGULAR
+    // Triangular PDF.
+    float nrand(float2 n)
+    {
+        return frac(sin(dot(n, float2(12.9898, 78.233))) * 43758.5453);
+    }
+    float3 dither(float2 uv)
+    {
+        float r = nrand(uv) + nrand(uv + float2(1.1)) - 0.5;
+        return float3(r / 255);
+    }
+#endif
 
     // Color adjustment function.
     float3 adjust_color(float3 s)
@@ -107,10 +124,20 @@ float3 linear_to_srgb(float3 s)
         rgb = reinhard(rgb);
 #endif
 #if VIGNETTE_ON
+#if LINEAR_ON
+        rgb *= srgb_to_linear(vignette(i.uv));
+#else
         rgb *= vignette(i.uv);
 #endif
+#endif
         rgb = adjust_color(rgb);
-        rgb = srgb_to_linear(linear_to_srgb(rgb) + nrand(i.uv));
+#if !DITHER_OFF
+#if LINEAR_ON
+        rgb = srgb_to_linear(linear_to_srgb(rgb) + dither(i.uv));
+#else
+        rgb += dither(i.uv);
+#endif
+#endif
         return float4(rgb, source.a);
     }
 
@@ -123,7 +150,7 @@ float3 linear_to_srgb(float3 s)
             ZTest Always Cull Off ZWrite Off
             Fog { Mode off }      
             CGPROGRAM
-            #pragma fragmentoption ARB_precision_hint_fastest
+            #pragma target 3.0
             #pragma vertex vert_img
             #pragma fragment frag
             ENDCG

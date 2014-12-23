@@ -38,6 +38,7 @@ public class ColorSuiteEditor : Editor
     SerializedProperty propExposure;
 
     SerializedProperty propVignette;
+    SerializedProperty propDitherMode;
 
     void OnEnable()
     {
@@ -54,6 +55,7 @@ public class ColorSuiteEditor : Editor
         propExposure    = serializedObject.FindProperty("_exposure");
 
         propVignette = serializedObject.FindProperty("_vignette");
+        propDitherMode = serializedObject.FindProperty("_ditherMode");
     }
 
     public override void OnInspectorGUI()
@@ -78,6 +80,7 @@ public class ColorSuiteEditor : Editor
         EditorGUILayout.Slider(propBrightness, -1, 1);
         EditorGUILayout.Slider(propSaturation, 0, 3);
         EditorGUILayout.Slider(propContrast, -4, 4);
+        EditorGUILayout.PropertyField(propDitherMode);
 
         serializedObject.ApplyModifiedProperties();
     }

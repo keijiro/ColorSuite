@@ -89,6 +89,15 @@ public class ColorSuite : MonoBehaviour
         set { _vignette = value; }
     }
 
+    // Dithering options.
+    public enum DitherMode { Off, Ordered, Triangular  }
+    [SerializeField] DitherMode _ditherMode = DitherMode.Off;
+
+    public DitherMode ditherMode {
+        get { return _ditherMode; }
+        set { _ditherMode = value; }
+    }
+
     // Reference to the shader.
     [SerializeField] Shader shader;
 
@@ -162,6 +171,11 @@ public class ColorSuite : MonoBehaviour
         _material.SetTexture("_Curves", _texture);
         _material.SetFloat("_Saturation", _saturation);
 
+        if (QualitySettings.activeColorSpace == ColorSpace.Linear)
+            _material.EnableKeyword("LINEAR_ON");
+        else
+            _material.DisableKeyword("LINEAR_ON");
+
         if (_tonemapping)
         {
             _material.EnableKeyword("TONEMAPPING_ON");
@@ -177,6 +191,22 @@ public class ColorSuite : MonoBehaviour
         }
         else
             _material.DisableKeyword("VIGNETTE_ON");
+
+        if (_ditherMode == DitherMode.Ordered)
+        {
+            _material.EnableKeyword("DITHER_ORDERED");
+            _material.DisableKeyword("DITHER_TRIANGULAR");
+        }
+        else if (_ditherMode == DitherMode.Triangular)
+        {
+            _material.DisableKeyword("DITHER_ORDERED");
+            _material.EnableKeyword("DITHER_TRIANGULAR");
+        }
+        else
+        {
+            _material.DisableKeyword("DITHER_ORDERED");
+            _material.DisableKeyword("DITHER_TRIANGULAR");
+        }
 
         Graphics.Blit(source, destination, _material);
     }
