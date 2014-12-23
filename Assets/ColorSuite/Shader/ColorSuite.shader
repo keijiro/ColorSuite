@@ -60,6 +60,34 @@ Shader "Hidden/ColorSuite"
     }
 #endif
 
+// sRGB and linear color space conversion.
+// http://chilliant.blogspot.jp/2012/08/srgb-approximations-for-hlsl.html
+
+float3 srgb_to_linear(float3 s)
+{
+    return s * (s * (s * 0.305306011 + 0.682171111) + 0.012522878);
+}
+
+float3 linear_to_srgb(float3 s)
+{
+    s = saturate(s);
+    float3 s1 = sqrt(s);
+    float3 s2 = sqrt(s1);
+    float3 s3 = sqrt(s2);
+    return 0.585122381 * s1 + 0.783140355 * s2 - 0.368262736 * s3;
+}
+
+    float nrand(float2 n, float hash)
+    {
+        return frac(sin(dot(n, float2(12.9898f, 78.233f))) * hash);
+    }
+
+    float3 nrand(float2 n)
+    {
+        float l = (nrand(n, 43758.5453f) + nrand(n, 43759.5453f) - 0.5f) / 255;
+        return float3(1, 1, 1) * l;
+    }
+
     // Color adjustment function.
     float3 adjust_color(float3 s)
     {
@@ -81,7 +109,9 @@ Shader "Hidden/ColorSuite"
 #if VIGNETTE_ON
         rgb *= vignette(i.uv);
 #endif
-        return float4(adjust_color(rgb), source.a);
+        rgb = adjust_color(rgb);
+        rgb = srgb_to_linear(linear_to_srgb(rgb) + nrand(i.uv));
+        return float4(rgb, source.a);
     }
 
     ENDCG 
