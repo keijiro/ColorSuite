@@ -35,19 +35,19 @@ public class ColorSuite : MonoBehaviour
 
     public AnimationCurve redCurve {
         get { return _rCurve; }
-        set { _rCurve = value; UpdateParameters(); }
+        set { _rCurve = value; UpdateCurves(); }
     }
     public AnimationCurve greenCurve {
         get { return _gCurve; }
-        set { _gCurve = value; UpdateParameters(); }
+        set { _gCurve = value; UpdateCurves(); }
     }
     public AnimationCurve blueCurve {
         get { return _bCurve; }
-        set { _bCurve = value; UpdateParameters(); }
+        set { _bCurve = value; UpdateCurves(); }
     }
     public AnimationCurve luminanceCurve {
         get { return _lCurve; }
-        set { _lCurve = value; UpdateParameters(); }
+        set { _lCurve = value; UpdateCurves(); }
     }
 
     // Adjustment parameters.
@@ -57,15 +57,15 @@ public class ColorSuite : MonoBehaviour
 
     public float brightness {
         get { return _brightness; }
-        set { _brightness = value; UpdateParameters(); }
+        set { _brightness = value; UpdateCurves(); }
     }
     public float contrast {
         get { return _contrast; }
-        set { _contrast = value; UpdateParameters(); }
+        set { _contrast = value; UpdateCurves(); }
     }
     public float saturation {
         get { return _saturation; }
-        set { _saturation = value; } // no UpdateParameters
+        set { _saturation = value; } // no UpdateCurves
     }
 
     // Tonemapping parameters.
@@ -93,8 +93,8 @@ public class ColorSuite : MonoBehaviour
     [SerializeField] Shader shader;
 
     // Temporary objects.
-    Material material;
-    Texture2D texture;
+    Material _material;
+    Texture2D _texture;
 
     Color EncodeRGBM(float r, float g, float b)
     {
@@ -103,66 +103,81 @@ public class ColorSuite : MonoBehaviour
         return new Color(r / a, g / a, b / a, a);
     }
 
-    void SetUpObjects()
+    void SetUpResources()
     {
-        if (material != null && texture != null) return;
+        if (_material == null)
+        {
+            _material = new Material(shader);
+            _material.hideFlags = HideFlags.DontSave;
+        }
 
-        material = new Material(shader);
-        material.hideFlags = HideFlags.DontSave;
-
-        texture = new Texture2D(512, 1, TextureFormat.ARGB32, false, true);
-        texture.hideFlags = HideFlags.DontSave;
-        texture.wrapMode = TextureWrapMode.Clamp;
-
-        UpdateParameters();
+        if (_texture == null)
+        {
+            _texture = new Texture2D(512, 1, TextureFormat.ARGB32, false, true);
+            _texture.hideFlags = HideFlags.DontSave;
+            _texture.wrapMode = TextureWrapMode.Clamp;
+            UpdateCurves();
+        }
     }
 
-    void UpdateParameters()
+    void UpdateCurves()
     {
         // Variables for brightness adjustment.
         var bt = _brightness > 0 ? 1.0f : -1.0f;
         var bp = Mathf.Abs(_brightness);
 
-        for (var x = 0; x < texture.width; x++)
+        for (var x = 0; x < _texture.width; x++)
         {
-            var u = 1.0f / (texture.width - 1) * x;
+            var u = 1.0f / (_texture.width - 1) * x;
             var r = Mathf.Lerp(_lCurve.Evaluate((_rCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
             var g = Mathf.Lerp(_lCurve.Evaluate((_gCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
             var b = Mathf.Lerp(_lCurve.Evaluate((_bCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
-            texture.SetPixel(x, 0, EncodeRGBM(r, g, b));
+            _texture.SetPixel(x, 0, EncodeRGBM(r, g, b));
         }
 
-        texture.Apply();
+        _texture.Apply();
     }
 
     void Start()
     {
-        SetUpObjects();
+        SetUpResources();
+    }
+
+    void OnValidate()
+    {
+        SetUpResources();
+        UpdateCurves();
+    }
+
+    void Reset()
+    {
+        SetUpResources();
+        UpdateCurves();
     }
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        SetUpObjects();
+        SetUpResources();
 
-        material.SetTexture("_Curves", texture);
-        material.SetFloat("_Saturation", _saturation);
+        _material.SetTexture("_Curves", _texture);
+        _material.SetFloat("_Saturation", _saturation);
 
         if (_tonemapping)
         {
-            material.EnableKeyword("TONEMAPPING_ON");
-            material.SetFloat("_Exposure", _exposure);
+            _material.EnableKeyword("TONEMAPPING_ON");
+            _material.SetFloat("_Exposure", _exposure);
         }
         else
-            material.DisableKeyword("TONEMAPPING_ON");
+            _material.DisableKeyword("TONEMAPPING_ON");
 
         if (_vignette > 0.0f)
         {
-            material.EnableKeyword("VIGNETTE_ON");
-            material.SetFloat("_Vignette", _vignette);
+            _material.EnableKeyword("VIGNETTE_ON");
+            _material.SetFloat("_Vignette", _vignette);
         }
         else
-            material.DisableKeyword("VIGNETTE_ON");
+            _material.DisableKeyword("VIGNETTE_ON");
 
-        Graphics.Blit(source, destination, material);
+        Graphics.Blit(source, destination, _material);
     }
 }

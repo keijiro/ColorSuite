@@ -80,9 +80,5 @@ public class ColorSuiteEditor : Editor
         EditorGUILayout.Slider(propContrast, -4, 4);
 
         serializedObject.ApplyModifiedProperties();
-
-        if (GUI.changed)
-            foreach (var t in targets)
-                (t as ColorSuite).SendMessage("UpdateParameters");
     }
 }
