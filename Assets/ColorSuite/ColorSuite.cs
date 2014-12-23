@@ -96,6 +96,13 @@ public class ColorSuite : MonoBehaviour
     Material material;
     Texture2D texture;
 
+    Color EncodeRGBM(float r, float g, float b)
+    {
+        var a = Mathf.Max(Mathf.Max(r, g), Mathf.Max(b, 1e-6f));
+        a = Mathf.Ceil(a * 255) / 255;
+        return new Color(r / a, g / a, b / a, a);
+    }
+
     void SetUpObjects()
     {
         if (material != null && texture != null) return;
@@ -103,7 +110,7 @@ public class ColorSuite : MonoBehaviour
         material = new Material(shader);
         material.hideFlags = HideFlags.DontSave;
 
-        texture = new Texture2D(256, 1, TextureFormat.ARGB32, false, true);
+        texture = new Texture2D(512, 1, TextureFormat.ARGB32, false, true);
         texture.hideFlags = HideFlags.DontSave;
         texture.wrapMode = TextureWrapMode.Clamp;
 
@@ -122,7 +129,7 @@ public class ColorSuite : MonoBehaviour
             var r = Mathf.Lerp(_lCurve.Evaluate((_rCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
             var g = Mathf.Lerp(_lCurve.Evaluate((_gCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
             var b = Mathf.Lerp(_lCurve.Evaluate((_bCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
-            texture.SetPixel(x, 0, new Color(r, g, b, 0));
+            texture.SetPixel(x, 0, EncodeRGBM(r, g, b));
         }
 
         texture.Apply();

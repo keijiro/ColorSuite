@@ -63,10 +63,10 @@ Shader "Hidden/ColorSuite"
     // Color adjustment function.
     float3 adjust_color(float3 s)
     {
-        float3 r = tex2D(_Curves, float2(s.r, 0)) * float3(1, 0, 0);
-        float3 g = tex2D(_Curves, float2(s.g, 0)) * float3(0, 1, 0);
-        float3 b = tex2D(_Curves, float2(s.b, 0)) * float3(0, 0, 1);
-        float3 c = r + g + b;
+        float4 r = tex2D(_Curves, float2(s.r, 0));
+        float4 g = tex2D(_Curves, float2(s.g, 0));
+        float4 b = tex2D(_Curves, float2(s.b, 0));
+        float3 c = float3(r.r * r.a, g.g * g.a, b.b * b.a);
         float l = Luminance(c);
         return lerp(float3(l, l, l), c, _Saturation);
     }
