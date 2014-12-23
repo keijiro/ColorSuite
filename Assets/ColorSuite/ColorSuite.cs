@@ -22,6 +22,7 @@ using UnityEngine;
 using System.Collections;
 
 [ExecuteInEditMode]
+[ImageEffectTransformsToLDR]
 [RequireComponent(typeof(Camera))]
 [AddComponentMenu("Image Effects/Color Adjustments/Color Suite")]
 public class ColorSuite : MonoBehaviour
