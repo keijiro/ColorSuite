@@ -7,6 +7,14 @@ Shader "Custom/Gradient Test"
 
 #include "UnityCG.cginc"
 
+float3 hue_to_rgb(float h)
+{
+    float r = abs(h * 6 - 3) - 1;
+    float g = 2 - abs(h * 6 - 2);
+    float b = 2 - abs(h * 6 - 4);
+    return saturate(float3(r, g, b));
+}
+
 // sRGB and linear color space conversion.
 // http://chilliant.blogspot.jp/2012/08/srgb-approximations-for-hlsl.html
 
@@ -26,34 +34,32 @@ float3 linear_to_srgb(float3 s)
 
 float4 frag(v2f_img i) : SV_Target 
 {
+    float u = i.uv.x;
+    float v = i.uv.y;
     float3 rgb;
 
-    if (i.uv.y < 0.25)
+    if (v < 0.1)
     {
-        rgb = float3(2, 2, 2) * i.uv.x;
+        rgb = srgb_to_linear(float3(u));
+    }
+    else if (v < 0.2)
+    {
+        rgb = float3(u);
+    }
+    else if (v < 0.3)
+    {
+        rgb = float3(u * 2);
+    }
+    else if (v < 0.65)
+    {
+        rgb = srgb_to_linear(hue_to_rgb(u) * (v - 0.3) / 0.35);
     }
     else
     {
-        float u = i.uv.x;
-        float v = (i.uv.y - 0.25) * 8 / 3;
-
-        float r = abs(u * 6 - 3) - 1;
-        float g = 2 - abs(u * 6 - 2);
-        float b = 2 - abs(u * 6 - 4);
-
-        rgb = saturate(float3(r, g, b));
-
-        if (v < 1)
-        {
-            rgb *= v;
-        }
-        else
-        {
-            rgb = lerp(rgb, float3(1, 1, 1), v - 1);
-        }
+        rgb = hue_to_rgb(u) * (v - 0.65) / 0.35;
     }
 
-    return float4(srgb_to_linear(rgb), 1);
+    return float4(rgb, 1);
 }
 
     ENDCG 
