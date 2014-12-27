@@ -39,6 +39,10 @@ public class ColorSuiteEditor : Editor
 
     SerializedProperty propVignette;
 
+    SerializedProperty propWhiteBalancing;
+    SerializedProperty propWhiteColorTemp;
+    SerializedProperty propWhiteColorTint;
+
     void OnEnable()
     {
         propRCurve = serializedObject.FindProperty("_rCurve");
@@ -54,6 +58,10 @@ public class ColorSuiteEditor : Editor
         propExposure    = serializedObject.FindProperty("_exposure");
 
         propVignette = serializedObject.FindProperty("_vignette");
+
+        propWhiteBalancing = serializedObject.FindProperty("_whiteBalancing");
+        propWhiteColorTemp = serializedObject.FindProperty("_whiteColorTemp");
+        propWhiteColorTint = serializedObject.FindProperty("_whiteColorTint");
     }
 
     public override void OnInspectorGUI()
@@ -78,6 +86,13 @@ public class ColorSuiteEditor : Editor
         EditorGUILayout.Slider(propBrightness, -1, 1);
         EditorGUILayout.Slider(propSaturation, 0, 3);
         EditorGUILayout.Slider(propContrast, -4, 4);
+
+        EditorGUILayout.PropertyField(propWhiteBalancing);
+        if (propWhiteBalancing.hasMultipleDifferentValues || propWhiteBalancing.boolValue)
+        {
+            EditorGUILayout.Slider(propWhiteColorTemp, 3000.0f, 15000.0f);
+            EditorGUILayout.Slider(propWhiteColorTint, -1.0f, 1.0f);
+        }
 
         serializedObject.ApplyModifiedProperties();
     }

@@ -89,6 +89,24 @@ public class ColorSuite : MonoBehaviour
         set { _vignette = value; }
     }
 
+    // White balance parameters.
+    [SerializeField] bool _whiteBalancing = false;
+    [SerializeField] float _whiteColorTemp = 6600.0f;
+    [SerializeField] float _whiteColorTint = 0.0f;
+
+    public bool whiteBalancing {
+        get { return _whiteBalancing; }
+        set { _whiteBalancing = value; }
+    }
+    public float whiteColorTemp {
+        get { return _whiteColorTemp; }
+        set { _whiteColorTemp = value; }
+    }
+    public float whiteColorTint {
+        get { return _whiteColorTint; }
+        set { _whiteColorTint = value; }
+    }
+
     // Reference to the shader.
     [SerializeField] Shader shader;
 
@@ -155,6 +173,76 @@ public class ColorSuite : MonoBehaviour
         UpdateCurves();
     }
 
+    // Converts a color temperature (Kelvin) to sRGB value.
+    //
+    // This implementation is based on a Tanner Helland's approximation.
+    // http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
+    //
+    // The coefficients have been slightly modified to get a continuous gradient,
+    // and therefore it shouldn't be considered as a scientifically accurate color
+    // temperature model.
+    static Vector3 KelvinToColor(float k)
+    {
+        float r, g, b;
+
+        k *= 0.01f;
+
+        if (k < 66)
+        {
+            r = 1;
+            g = 0.38855782260195315f * Mathf.Log(k) - 0.6279231240157355f;
+            if (k < 19)
+                b = 0;
+            else
+                b = 0.5410848875902343f * Mathf.Log(k - 10) - 1.1888850134384685f;
+        }
+        else
+        {
+            r = Mathf.Pow(k - 60, -0.1332047592f) / 0.7876740722020901f;
+            g = Mathf.Pow(k - 60, -0.0755148492f) / 0.8734499527546277f;
+            b = 1;
+        }
+
+        return new Vector3(r, g, b);
+    }
+
+    // Color space conversion between RGB and LMS.
+    // http://www.daltonize.org/2010/05/lms-daltonization-algorithm.html
+    static Vector3 RgbToLms(Vector3 rgb)
+    {
+        return new Vector3(
+            Vector3.Dot(new Vector3(1.78824e+1f, 4.35161e+1f, 4.11935e+0f), rgb),
+            Vector3.Dot(new Vector3(3.45565e+0f, 2.71554e+1f, 3.86714e+0f), rgb),
+            Vector3.Dot(new Vector3(2.99566e-2f, 1.84309e-1f, 1.46709e+0f), rgb)
+        );
+    }
+    static Vector3 LmsToRgb(Vector3 rgb)
+    {
+        return new Vector3(
+            Vector3.Dot(new Vector3( 8.09444479e-2f, -1.30504409e-1f,  1.16721066e-1f), rgb),
+            Vector3.Dot(new Vector3(-1.02485335e-2f,  5.40193266e-2f, -1.13614708e-1f), rgb),
+            Vector3.Dot(new Vector3(-3.65296938e-4f, -4.12161469e-3f,  6.93511405e-1f), rgb)
+        );
+    }
+
+    // Calculate the color balance coefficients.
+    Vector3 CalculateColorBalance()
+    {
+        // Get the white point.
+        var white = KelvinToColor(_whiteColorTemp);
+
+        // Magenta to green color tint.
+        white += Vector3.Min(new Vector3(-0.2f, 0.3f, -0.4f) * _whiteColorTint, Vector3.zero);
+
+        // Normalize the white point.
+        white /= Vector3.Dot(white, new Vector3(0.3f, 0.59f, 0.11f)); // Y'601
+
+        // Calculate the coefficients in the LMS space.
+        var c1 = new Vector3(6.551785e+1f, 3.447819e+1f, 1.681356e+0f); // RgbToLms(Vector3.one)
+        var c2 = RgbToLms(white);
+        return new Vector3(c1.x / c2.x, c1.y / c2.y, c1.z / c2.z);
+    }
+
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         SetUpResources();
@@ -177,6 +265,14 @@ public class ColorSuite : MonoBehaviour
         }
         else
             _material.DisableKeyword("VIGNETTE_ON");
+
+        if (_whiteBalancing)
+        {
+            _material.EnableKeyword("BALANCING_ON");
+            _material.SetVector("_Balance", CalculateColorBalance());
+        }
+        else
+            _material.DisableKeyword("BALANCING_ON");
 
         Graphics.Blit(source, destination, _material);
     }
