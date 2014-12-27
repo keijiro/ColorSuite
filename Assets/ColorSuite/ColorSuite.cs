@@ -31,7 +31,7 @@ public class ColorSuite : MonoBehaviour
     [SerializeField] AnimationCurve _rCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [SerializeField] AnimationCurve _gCurve = AnimationCurve.Linear(0, 0, 1, 1);
     [SerializeField] AnimationCurve _bCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    [SerializeField] AnimationCurve _lCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [SerializeField] AnimationCurve _cCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     public AnimationCurve redCurve {
         get { return _rCurve; }
@@ -46,8 +46,8 @@ public class ColorSuite : MonoBehaviour
         set { _bCurve = value; UpdateCurves(); }
     }
     public AnimationCurve luminanceCurve {
-        get { return _lCurve; }
-        set { _lCurve = value; UpdateCurves(); }
+        get { return _cCurve; }
+        set { _cCurve = value; UpdateCurves(); }
     }
 
     // Adjustment parameters.
@@ -107,9 +107,9 @@ public class ColorSuite : MonoBehaviour
         for (var x = 0; x < _texture.width; x++)
         {
             var u = 1.0f / (_texture.width - 1) * x;
-            var r = _lCurve.Evaluate(_rCurve.Evaluate(u));
-            var g = _lCurve.Evaluate(_gCurve.Evaluate(u));
-            var b = _lCurve.Evaluate(_bCurve.Evaluate(u));
+            var r = _cCurve.Evaluate(_rCurve.Evaluate(u));
+            var g = _cCurve.Evaluate(_gCurve.Evaluate(u));
+            var b = _cCurve.Evaluate(_bCurve.Evaluate(u));
             _texture.SetPixel(x, 0, EncodeRGBM(r, g, b));
         }
 

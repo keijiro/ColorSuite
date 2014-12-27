@@ -573,24 +573,19 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
-  _lCurve:
+  _cCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .864412248
-      outSlope: .864412248
-      tangentMode: 10
-    - time: .490463912
-      value: .42396301
-      inSlope: 1.15626061
-      outSlope: 1.15626061
-      tangentMode: 10
-    - time: .900138021
-      value: 1.01721573
-      inSlope: 1.44810891
-      outSlope: 1.44810891
-      tangentMode: 10
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
   _saturation: 1.21000004

@@ -215,7 +215,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  _lCurve:
+  _cCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0

@@ -28,7 +28,7 @@ public class ColorSuiteEditor : Editor
     SerializedProperty propRCurve;
     SerializedProperty propGCurve;
     SerializedProperty propBCurve;
-    SerializedProperty propLCurve;
+    SerializedProperty propCCurve;
 
     SerializedProperty propSaturation;
 
@@ -40,7 +40,7 @@ public class ColorSuiteEditor : Editor
         propRCurve = serializedObject.FindProperty("_rCurve");
         propGCurve = serializedObject.FindProperty("_gCurve");
         propBCurve = serializedObject.FindProperty("_bCurve");
-        propLCurve = serializedObject.FindProperty("_lCurve");
+        propCCurve = serializedObject.FindProperty("_cCurve");
 
         propSaturation = serializedObject.FindProperty("_saturation");
 
@@ -56,13 +56,13 @@ public class ColorSuiteEditor : Editor
         if (propToneMapping.hasMultipleDifferentValues || propToneMapping.boolValue)
             EditorGUILayout.Slider(propExposure, 0, 5);
         
-        EditorGUILayout.LabelField("Curves (Red, Green, Blue, Luminance)");
+        EditorGUILayout.LabelField("Curves (R, G, B, Combined)");
         EditorGUILayout.BeginHorizontal();
         var doubleHeight = GUILayout.Height(EditorGUIUtility.singleLineHeight * 2);
         EditorGUILayout.PropertyField(propRCurve, GUIContent.none, doubleHeight);
         EditorGUILayout.PropertyField(propGCurve, GUIContent.none, doubleHeight);
         EditorGUILayout.PropertyField(propBCurve, GUIContent.none, doubleHeight);
-        EditorGUILayout.PropertyField(propLCurve, GUIContent.none, doubleHeight);
+        EditorGUILayout.PropertyField(propCCurve, GUIContent.none, doubleHeight);
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.Slider(propSaturation, 0, 3);
