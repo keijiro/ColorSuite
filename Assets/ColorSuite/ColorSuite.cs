@@ -81,14 +81,6 @@ public class ColorSuite : MonoBehaviour
         set { _exposure = value; }
     }
 
-    // Vignette parameters.
-    [SerializeField] float _vignette = 0.0f;
-
-    public float vignette {
-        get { return _vignette; }
-        set { _vignette = value; }
-    }
-
     // Reference to the shader.
     [SerializeField] Shader shader;
 
@@ -169,14 +161,6 @@ public class ColorSuite : MonoBehaviour
         }
         else
             _material.DisableKeyword("TONEMAPPING_ON");
-
-        if (_vignette > 0.0f)
-        {
-            _material.EnableKeyword("VIGNETTE_ON");
-            _material.SetFloat("_Vignette", _vignette);
-        }
-        else
-            _material.DisableKeyword("VIGNETTE_ON");
 
         Graphics.Blit(source, destination, _material);
     }

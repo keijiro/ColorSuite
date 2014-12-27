@@ -29,9 +29,8 @@ Shader "Hidden/ColorSuite"
     
     CGINCLUDE
 
-    // Multi compilation options (vignette/tonemapping)
+    // Multi compilation options.
     #pragma multi_compile TONEMAPPING_OFF TONEMAPPING_ON
-    #pragma multi_compile VIGNETTE_OFF VIGNETTE_ON
 
     #include "UnityCG.cginc"
     
@@ -47,16 +46,6 @@ Shader "Hidden/ColorSuite"
         float l = Luminance(s); 
         float lT = l * _Exposure;
         return s * (lT / ((1 + lT) * l));
-    }
-#endif
-
-#if VIGNETTE_ON
-    // Pseudo vignette function
-    float _Vignette;
-    float vignette(float2 uv)
-    {
-        float2 cuv = (uv - 0.5) * 2;
-        return 1 - dot(cuv, cuv) * _Vignette * 0.1;
     }
 #endif
 
@@ -77,9 +66,6 @@ Shader "Hidden/ColorSuite"
         float3 rgb = source.rgb;
 #if TONEMAPPING_ON
         rgb = reinhard(rgb);
-#endif
-#if VIGNETTE_ON
-        rgb *= vignette(i.uv);
 #endif
         return float4(adjust_color(rgb), source.a);
     }
