@@ -7,4 +7,5 @@ Temp/
 *.pidb
 *.userprefs
 
+*.swp
 .DS_Store
