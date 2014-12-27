@@ -233,9 +233,8 @@ MonoBehaviour:
   _brightness: 0
   _contrast: 1
   _saturation: 1
-  _tonemapping: 0
+  _toneMapping: 0
   _exposure: 1.79999995
-  _vignette: 0
   shader: {fileID: 4800000, guid: dc9775b65c52747e69fc4c854c00d696, type: 3}
 --- !u!1 &1386629040
 GameObject:

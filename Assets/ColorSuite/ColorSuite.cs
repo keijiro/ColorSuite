@@ -68,13 +68,13 @@ public class ColorSuite : MonoBehaviour
         set { _saturation = value; } // no UpdateCurves
     }
 
-    // Tonemapping parameters.
-    [SerializeField] bool _tonemapping = false;
+    // Tone mapping parameters.
+    [SerializeField] bool _toneMapping = false;
     [SerializeField] float _exposure   = 1.8f;
 
-    public bool tonemapping {
-        get { return _tonemapping; }
-        set { _tonemapping = value; }
+    public bool toneMapping {
+        get { return _toneMapping; }
+        set { _toneMapping = value; }
     }
     public float exposure {
         get { return _exposure; }
@@ -154,7 +154,7 @@ public class ColorSuite : MonoBehaviour
         _material.SetTexture("_Curves", _texture);
         _material.SetFloat("_Saturation", _saturation);
 
-        if (_tonemapping)
+        if (_toneMapping)
         {
             _material.EnableKeyword("TONEMAPPING_ON");
             _material.SetFloat("_Exposure", _exposure);

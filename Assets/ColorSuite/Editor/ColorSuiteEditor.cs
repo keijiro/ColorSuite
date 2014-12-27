@@ -34,7 +34,7 @@ public class ColorSuiteEditor : Editor
     SerializedProperty propSaturation;
     SerializedProperty propContrast;
 
-    SerializedProperty propTonemapping;
+    SerializedProperty propToneMapping;
     SerializedProperty propExposure;
 
     void OnEnable()
@@ -48,7 +48,7 @@ public class ColorSuiteEditor : Editor
         propSaturation = serializedObject.FindProperty("_saturation");
         propContrast   = serializedObject.FindProperty("_contrast");
 
-        propTonemapping = serializedObject.FindProperty("_tonemapping");
+        propToneMapping = serializedObject.FindProperty("_toneMapping");
         propExposure    = serializedObject.FindProperty("_exposure");
     }
 
@@ -56,8 +56,8 @@ public class ColorSuiteEditor : Editor
     {
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(propTonemapping);
-        if (propTonemapping.hasMultipleDifferentValues || propTonemapping.boolValue)
+        EditorGUILayout.PropertyField(propToneMapping);
+        if (propToneMapping.hasMultipleDifferentValues || propToneMapping.boolValue)
             EditorGUILayout.Slider(propExposure, 0, 5);
         
         EditorGUILayout.LabelField("Curves (Red, Green, Blue, Luminance)");

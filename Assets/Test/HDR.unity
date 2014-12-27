@@ -596,9 +596,8 @@ MonoBehaviour:
   _brightness: .0399999991
   _contrast: 1.25999999
   _saturation: 1.21000004
-  _tonemapping: 1
+  _toneMapping: 1
   _exposure: 1.62
-  _vignette: 4.42999983
   shader: {fileID: 4800000, guid: dc9775b65c52747e69fc4c854c00d696, type: 3}
 --- !u!81 &1458254039
 AudioListener:
