@@ -593,8 +593,6 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
-  _brightness: .0399999991
-  _contrast: 1.25999999
   _saturation: 1.21000004
   _toneMapping: 1
   _exposure: 1.62

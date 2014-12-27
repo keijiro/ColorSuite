@@ -30,9 +30,7 @@ public class ColorSuiteEditor : Editor
     SerializedProperty propBCurve;
     SerializedProperty propLCurve;
 
-    SerializedProperty propBrightness;
     SerializedProperty propSaturation;
-    SerializedProperty propContrast;
 
     SerializedProperty propToneMapping;
     SerializedProperty propExposure;
@@ -44,9 +42,7 @@ public class ColorSuiteEditor : Editor
         propBCurve = serializedObject.FindProperty("_bCurve");
         propLCurve = serializedObject.FindProperty("_lCurve");
 
-        propBrightness = serializedObject.FindProperty("_brightness");
         propSaturation = serializedObject.FindProperty("_saturation");
-        propContrast   = serializedObject.FindProperty("_contrast");
 
         propToneMapping = serializedObject.FindProperty("_toneMapping");
         propExposure    = serializedObject.FindProperty("_exposure");
@@ -69,9 +65,7 @@ public class ColorSuiteEditor : Editor
         EditorGUILayout.PropertyField(propLCurve, GUIContent.none, doubleHeight);
         EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.Slider(propBrightness, -1, 1);
         EditorGUILayout.Slider(propSaturation, 0, 3);
-        EditorGUILayout.Slider(propContrast, -4, 4);
 
         serializedObject.ApplyModifiedProperties();
     }

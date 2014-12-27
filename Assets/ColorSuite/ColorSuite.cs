@@ -51,18 +51,8 @@ public class ColorSuite : MonoBehaviour
     }
 
     // Adjustment parameters.
-    [SerializeField] float _brightness = 0.0f;
-    [SerializeField] float _contrast   = 1.0f;
     [SerializeField] float _saturation = 1.0f;
 
-    public float brightness {
-        get { return _brightness; }
-        set { _brightness = value; UpdateCurves(); }
-    }
-    public float contrast {
-        get { return _contrast; }
-        set { _contrast = value; UpdateCurves(); }
-    }
     public float saturation {
         get { return _saturation; }
         set { _saturation = value; } // no UpdateCurves
@@ -114,16 +104,12 @@ public class ColorSuite : MonoBehaviour
 
     void UpdateCurves()
     {
-        // Variables for brightness adjustment.
-        var bt = _brightness > 0 ? 1.0f : -1.0f;
-        var bp = Mathf.Abs(_brightness);
-
         for (var x = 0; x < _texture.width; x++)
         {
             var u = 1.0f / (_texture.width - 1) * x;
-            var r = Mathf.Lerp(_lCurve.Evaluate((_rCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
-            var g = Mathf.Lerp(_lCurve.Evaluate((_gCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
-            var b = Mathf.Lerp(_lCurve.Evaluate((_bCurve.Evaluate(u) - 0.5f) * _contrast + 0.5f), bt, bp);
+            var r = _lCurve.Evaluate(_rCurve.Evaluate(u));
+            var g = _lCurve.Evaluate(_gCurve.Evaluate(u));
+            var b = _lCurve.Evaluate(_bCurve.Evaluate(u));
             _texture.SetPixel(x, 0, EncodeRGBM(r, g, b));
         }
 
