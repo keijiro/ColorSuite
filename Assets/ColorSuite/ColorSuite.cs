@@ -183,7 +183,7 @@ public class ColorSuite : MonoBehaviour
         // Get CIE xy chromaticity of the reference white point.
         // Note: 0.31271 = x value on the D65 white point
         var x = 0.31271f - _colorTemp * (_colorTemp < 0.0f ? 0.1f : 0.05f);
-        var y = StandardIlluminantY(x) + _colorTint * 0.1f;
+        var y = StandardIlluminantY(x) + _colorTint * 0.05f;
 
         // Calculate the coefficients in the LMS space.
         var w = CIExyToLMS(x, y);
