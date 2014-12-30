@@ -4,9 +4,9 @@ ColorSuite
 ![Screenshot 1][Screen1]
 
 *ColorSuite* is an image effect for Unity, which manages multiple color
-adjustment tasks in a single component. These tasks are implemented in a single-
+adjustment tasks in a single component. These tasks are implemented in a single
 pass shader, and it automatically strips out unused functions from the shader to
-keep the best performance in any setting.
+keep the best performance in any configuration.
 
 ![Screenshot 2][Screen2]
 
@@ -16,30 +16,41 @@ Features
 --------
 
 - Tone mapping ([John Hable's filmic tone mapping operator][Hable])
-- White balance (color temperature and green-magenta tint)
-- Saturation adjustment
-- Tone curves (red, green, blue and RGB-combined)
+- White balance adjustment (color temperature and green-magenta tint)
+- Color saturation adjustment
+- Tone curves (individual RGB channels and RGB-combined)
 - Dither (ordered and triangular)
 
 The ColorSuite component has a box at the bottom of the inspector, and it shows
 the list of functions that are currently activated. It's useful to know how the
-shader works in the current configuration.
+shader works under the current configuration.
 
 ![Inspector][Inspector]
 
 Usage Note
 ----------
 
-- Although it's designed to work in any configuration, it's optimized for linear
-  lighting and HDR rendering. It's recommended to use with these features.
-- Math operations used in the white balance is relatively complex altough the
-  effect is subtle. It should be kept untouched (or set to zero) whenever not
-  needed.
-- Dither is used to avoid color banding which occurs in low contrast situations
-  (see the image below). In other words, it should be turned off unless there is
-  any noticeable banding.
+#### HDR rendering and linear lighting
+
+The ColorSuite shader is designed to work for any configuration, but specially
+optimized for the combination of the HDR rendering and the linear lighting.
+It's recommended to use with these features.
+
+#### White balancing is complex operation
+
+Math operations used in the white balance is relatively complex altough the
+effect is subtle. It should be kept untouched (or set to zero) whenever not
+needed.
+
+#### Use dither if banding
+
+Dither is used to avoid color banding which occurs in low contrast situations
+(see the image below). In other words, it should be turned off unless there is
+any noticeable banding.
 
 ![Dither][Dither]
+
+(no dither, ordered dither, triangular PDF; the contrast was adjusted for emphasis)
 
 License
 -------
