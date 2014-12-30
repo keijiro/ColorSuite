@@ -6,7 +6,7 @@ ColorSuite
 *ColorSuite* is an image effect for Unity, which manages multiple color
 adjustment tasks in a single component. These tasks are implemented in a single
 pass shader, and it automatically strips out unused functions from the shader to
-keep the best performance in any configuration.
+keep the best performance in any configurations.
 
 ![Screenshot 2][Screen2]
 
@@ -19,11 +19,11 @@ Features
 - White balance adjustment (color temperature and green-magenta tint)
 - Color saturation adjustment
 - Tone curves (individual RGB channels and RGB-combined)
-- Dither (ordered and triangular)
+- Dither (ordered dither or triangular PDF dither)
 
 The ColorSuite component has a box at the bottom of the inspector, and it shows
 the list of functions that are currently activated. It's useful to know how the
-shader works under the current configuration.
+shader works for the current configuration.
 
 ![Inspector][Inspector]
 
@@ -36,11 +36,11 @@ The ColorSuite shader is designed to work for any configuration, but specially
 optimized for the combination of the HDR rendering and the linear lighting.
 It's recommended to use with these features.
 
-#### White balancing is complex operation
+#### White balancing is complex
 
-Math operations used in the white balance is relatively complex altough the
-effect is subtle. It should be kept untouched (or set to zero) whenever not
-needed.
+Math operations used in the white balance adjustment is relatively complex
+even if the effect is very subtle. It should be kept untouched (or set to
+zero) whenever not needed.
 
 #### Use dither if banding
 
@@ -50,7 +50,7 @@ any noticeable banding.
 
 ![Dither][Dither]
 
-(no dither, ordered dither, triangular PDF; the contrast was adjusted for emphasis)
+(no dither, ordered, triangular; the contrast was adjusted for emphasis)
 
 License
 -------
