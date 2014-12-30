@@ -19,7 +19,7 @@ Features
 - White balance adjustment (color temperature and green-magenta tint)
 - Color saturation adjustment
 - Tone curves (individual RGB channels and RGB-combined)
-- Dither (ordered dither or triangular PDF dither)
+- Dithering (ordered dither or triangular PDF dither)
 
 The ColorSuite component has a box at the bottom of the inspector, and it shows
 the list of functions that are currently activated. It's useful to know how the
@@ -42,9 +42,9 @@ Math operations used in the white balance adjustment is relatively complex
 even if the effect is very subtle. It should be kept untouched (or set to
 zero) whenever not needed.
 
-#### Use dither if banding
+#### Use dithering if banding
 
-Dither is used to avoid color banding which occurs in low contrast situations
+Dithering is used to avoid color banding which occurs in low contrast situations
 (see the image below). In other words, it should be turned off unless there is
 any noticeable banding.
 
