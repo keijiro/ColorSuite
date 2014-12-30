@@ -105,74 +105,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10593b7d510b64560a297a8af1356dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _colorTemp: -.0599999987
+  _colorTint: .230000004
+  _toneMapping: 0
+  _exposure: 1
+  _saturation: 1.32000005
   _rCurve:
     serializedVersion: 2
     m_Curve:
-    - time: -.00716845691
-      value: .149237782
-      inSlope: .446293771
-      outSlope: .446293771
-      tangentMode: 10
-    - time: .273185641
-      value: .274358064
-      inSlope: .777890444
-      outSlope: .777890444
-      tangentMode: 10
-    - time: .710458815
-      value: .759507
-      inSlope: .970043659
-      outSlope: .970043659
-      tangentMode: 10
+    - time: 0
+      value: 0
+      inSlope: 1.68181801
+      outSlope: 1.68181801
+      tangentMode: 0
     - time: 1
       value: 1
-      inSlope: .830600321
-      outSlope: .830600321
-      tangentMode: 10
+      inSlope: 1.70833421
+      outSlope: 1.70833421
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
   _gCurve:
     serializedVersion: 2
     m_Curve:
-    - time: -.0017728447
-      value: .0182460938
-      inSlope: .776631951
-      outSlope: .776631951
-      tangentMode: 10
-    - time: .1904957
-      value: .167567998
-      inSlope: 1.0134933
-      outSlope: 1.0134933
-      tangentMode: 10
-    - time: .673271418
-      value: .771208882
-      inSlope: .975301504
-      outSlope: .975301504
-      tangentMode: 10
+    - time: 0
+      value: 0
+      inSlope: 1.29069757
+      outSlope: 1.29069757
+      tangentMode: 0
     - time: 1
       value: 1
-      inSlope: .700248241
-      outSlope: .700248241
-      tangentMode: 10
+      inSlope: 1.02439058
+      outSlope: 1.02439058
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
   _bCurve:
     serializedVersion: 2
     m_Curve:
-    - time: -.00716845877
-      value: .0515151471
-      inSlope: .635839283
-      outSlope: .635839283
-      tangentMode: 10
-    - time: .315691113
-      value: .256801963
-      inSlope: .805256069
-      outSlope: .805256069
-      tangentMode: 10
-    - time: 1.00358427
-      value: .927272737
-      inSlope: .974672854
-      outSlope: .974672854
-      tangentMode: 10
+    - time: 0
+      value: 0
+      inSlope: 2.12499976
+      outSlope: 2.12499976
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 1.6153847
+      outSlope: 1.6153847
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
   _cCurve:
@@ -180,19 +160,17 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 0
-      outSlope: 1
+      inSlope: .676470459
+      outSlope: .676470459
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
+      inSlope: .390000373
+      outSlope: .390000373
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  _saturation: 1.02999997
-  _toneMapping: 0
-  _exposure: 1.79999995
+  _ditherMode: 0
   shader: {fileID: 4800000, guid: dc9775b65c52747e69fc4c854c00d696, type: 3}
 --- !u!81 &1458254039
 AudioListener:
