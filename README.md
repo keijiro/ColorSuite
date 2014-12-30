@@ -3,10 +3,12 @@ ColorSuite
 
 ![Screenshot 1](http://keijiro.github.io/ColorSuite/screenshot1.png)
 
-![Screenshot 2](http://keijiro.github.io/ColorSuite/screenshot2.png)
-
 ColorSuite is an image effect for Unity, which manages multiple color
 adjustment tasks in a single component.
+
+![Screenshot 2](http://keijiro.github.io/ColorSuite/screenshot2.png)
+
+![Screenshot 3](http://keijiro.github.io/ColorSuite/screenshot3.png)
 
 - Tone mapping (simplified Reinhard operator)
 - Tone curve (red, green, blue and luminance)
