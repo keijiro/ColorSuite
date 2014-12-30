@@ -1,24 +1,26 @@
 ColorSuite
 ==========
 
-![Screenshot 1](http://keijiro.github.io/ColorSuite/screenshot1.png)
+![Screenshot 1][Screen1]
 
-ColorSuite is an image effect for Unity, which manages multiple color
-adjustment tasks in a single component.
+*ColorSuite* is an image effect for Unity, which manages multiple color
+adjustment tasks in a single component. These tasks are implemented in a single
+one-pass shader. In case you dont't use some functions, it automatically strips
+out the unused functions from the shader using the multiple shader compilation
+technique, and guarantees the best performance in any case.
 
-![Screenshot 2](http://keijiro.github.io/ColorSuite/screenshot2.png)
+![Screenshot 2][Screen2]
 
-![Screenshot 3](http://keijiro.github.io/ColorSuite/screenshot3.png)
+![Screenshot 3][Screen3]
 
-- Tone mapping (simplified Reinhard operator)
-- Tone curve (red, green, blue and luminance)
-- Brightness, saturation and contrast control
-- Vignetting
+Features
+--------
 
-These functions are implemented in a single one-pass shader. In case you
-dont't use some functions, it automatically strips out the unused functions
-from the shader using the multiple shader compilation technique, and
-guarantees the best performance in any case.
+- Tone mapping ([John Hable's filmic tone mapping operator][Hable])
+- White balance (color temperature and green-magenta tint)
+- Saturation control
+- Tone curves (red, green, blue and RGB-combined)
+- Dither (ordered and triangular)
 
 License
 -------
@@ -41,3 +43,8 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[Hable]: http://filmicgames.com/archives/75
+[Screen1]: http://keijiro.github.io/ColorSuite/screenshot1.png
+[Screen2]: http://keijiro.github.io/ColorSuite/screenshot2.png
+[Screen3]: http://keijiro.github.io/ColorSuite/screenshot3.png
