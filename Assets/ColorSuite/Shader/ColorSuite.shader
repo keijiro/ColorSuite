@@ -104,6 +104,9 @@ Shader "Hidden/ColorSuite"
         // Apply the color balance in the LMS color space.
         c = lms_to_lrgb(lrgb_to_lms(c) * _Balance);
 
+        // It may return minus RGB value and it should be cropped out.
+        c = max(c, 0.0);
+
 #if !COLORSPACE_LINEAR
         // Gamma compression.
         c = pow(c, 1.0 / 2.2);
