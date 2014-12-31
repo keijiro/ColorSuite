@@ -45,12 +45,12 @@ zero) whenever not needed.
 #### Use dithering if banding
 
 Dithering is used to avoid color banding which occurs in low contrast situations
-(see the image below). In other words, it should be turned off unless there is
+(see the example below). In other words, it should be turned off unless there is
 any noticeable banding.
 
 ![Dither][Dither]
 
-(no dither, ordered, triangular; the contrast was adjusted for emphasis)
+(no dither, ordered, triangular; contrast adjusted for emphasis)
 
 License
 -------
