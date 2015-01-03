@@ -75,8 +75,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 [Hable]: http://filmicgames.com/archives/75
-[Screen1]: http://keijiro.github.io/ColorSuite/screenshot1.png
-[Screen2]: http://keijiro.github.io/ColorSuite/screenshot2.png
-[Screen3]: http://keijiro.github.io/ColorSuite/screenshot3.png
+[Screen1]: http://keijiro.github.io/ColorSuite/robotlab.png
+[Screen2]: http://keijiro.github.io/ColorSuite/photo.png
+[Screen3]: http://keijiro.github.io/ColorSuite/hdr.png
 [Inspector]: http://keijiro.github.io/ColorSuite/inspector.png
 [Dither]: http://keijiro.github.io/ColorSuite/dither.png
