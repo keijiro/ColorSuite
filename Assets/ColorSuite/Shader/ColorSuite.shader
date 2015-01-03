@@ -67,15 +67,15 @@ Shader "Hidden/ColorSuite"
 #if BALANCING_ON
 
     // Color space conversion between linear RGB and LMS.
-    // Based on the RLAB color appearance model.
-    // http://en.wikipedia.org/wiki/LMS_color_space#RLAB
+    // Based on the CIECAM02 model (CAT02).
+    // http://en.wikipedia.org/wiki/LMS_color_space#CAT02
 
     float3 lrgb_to_lms(float3 c)
     {
         float3x3 m = {
-            0.313908,  0.639529, 0.0465221,
-            0.155283,  0.757914, 0.0867275,
-            0.0177187, 0.109435, 0.872746
+            3.90405e-1f, 5.49941e-1f, 8.92632e-3f,
+            7.08416e-2f, 9.63172e-1f, 1.35775e-3f,
+            2.31082e-2f, 1.28021e-1f, 9.36245e-1f
         };
         return mul(m, c);
     }
@@ -83,9 +83,9 @@ Shader "Hidden/ColorSuite"
     float3 lms_to_lrgb(float3 c)
     {
         float3x3 m = {
-             5.47246,   -4.64216,  0.169594, 
-            -1.12464,    2.29262, -0.167876,
-             0.0299162, -0.193228, 1.16342
+             2.85847e+0f, -1.62879e+0f, -2.48910e-2f,
+            -2.10182e-1f,  1.15820e+0f,  3.24281e-4f,
+            -4.18120e-2f, -1.18169e-1f,  1.06867e+0f
         };
         return mul(m, c);
     }

@@ -126,17 +126,17 @@ public class ColorSuite : MonoBehaviour
         return 2.87f * x - 3.0f * x * x - 0.27509507f;
     }
 
-    // CIE xy chromaticity to RLAB LMS (normalized to D65).
-    // http://en.wikipedia.org/wiki/LMS_color_space#RLAB
+    // CIE xy chromaticity to CAT02 LMS.
+    // http://en.wikipedia.org/wiki/LMS_color_space#CAT02
     static Vector3 CIExyToLMS(float x, float y)
     {
         var Y = 1.0f;
         var X = Y * x / y;
         var Z = Y * (1.0f - x - y) / y;
 
-        var L =  0.4002f * X + 0.7076f * Y - 0.0808f * Z;
-        var M = -0.2263f * X + 1.1653f * Y + 0.0457f * Z;
-        var S =                              0.9182f * Z;
+        var L =  0.7328f * X + 0.4296f * Y - 0.1624f * Z;
+        var M = -0.7036f * X + 1.6975f * Y + 0.0061f * Z;
+        var S =  0.0030f * X + 0.0136f * Y + 0.9834f * Z;
 
         return new Vector3(L, M, S);
     }
@@ -186,8 +186,9 @@ public class ColorSuite : MonoBehaviour
         var y = StandardIlluminantY(x) + _colorTint * 0.05f;
 
         // Calculate the coefficients in the LMS space.
-        var w = CIExyToLMS(x, y);
-        return new Vector3(1.0f / w.x, 1.0f / w.y, 1.0f / w.z);
+        var w1 = new Vector3(0.949237f, 1.03542f, 1.08728f); // D65 white point
+        var w2 = CIExyToLMS(x, y);
+        return new Vector3(w1.x / w2.x, w1.y / w2.y, w1.z / w2.z);
     }
 
     #endregion
