@@ -50,10 +50,10 @@ LightmapSettings:
     m_SkyLightIntensity: 0
     m_Quality: 0
     m_Bounces: 3
-    m_FinalGatherRays: 2000
-    m_FinalGatherContrastThreshold: .0250000004
-    m_FinalGatherGradientThreshold: .699999988
-    m_FinalGatherInterpolationPoints: 25
+    m_FinalGatherRays: 3000
+    m_FinalGatherContrastThreshold: .300000012
+    m_FinalGatherGradientThreshold: 0
+    m_FinalGatherInterpolationPoints: 15
     m_AOAmount: 0
     m_AOMaxDistance: .100000001
     m_AOContrast: 1
@@ -175,15 +175,15 @@ MonoBehaviour:
   _colorTemp: -.25999999
   _colorTint: .159999996
   _toneMapping: 1
-  _exposure: .589999974
+  _exposure: .649999976
   _saturation: .879999995
   _rCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .0749999955
-      outSlope: .0749999955
+      inSlope: -.0271118246
+      outSlope: -.0271118246
       tangentMode: 0
     - time: 1
       value: 1
@@ -197,13 +197,13 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 1.19318175
-      outSlope: 1.19318175
+      inSlope: 1.49115038
+      outSlope: 1.49115038
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: 1.30263186
-      outSlope: 1.30263186
+      inSlope: 1.49115074
+      outSlope: 1.49115074
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -212,28 +212,28 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: .545454443
-      outSlope: .545454443
+      inSlope: 1.77325988
+      outSlope: 1.77325988
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: 1.58333409
-      outSlope: 1.58333409
+      inSlope: 2.21413279
+      outSlope: 2.21413279
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
   _cCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: 0
-      inSlope: .845454454
-      outSlope: .845454454
+    - time: .00593430642
+      value: -.0691724494
+      inSlope: .666078091
+      outSlope: .666078091
       tangentMode: 0
-    - time: .999930561
-      value: 1.04219818
-      inSlope: 1.12500083
-      outSlope: 1.12500083
+    - time: 1.00289774
+      value: 1.0329752
+      inSlope: .744712234
+      outSlope: .744712234
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -408,7 +408,7 @@ Renderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 0
-  m_LightmapTilingOffset: {x: .099609375, y: .0996093675, z: .791588187, w: .263267875}
+  m_LightmapTilingOffset: {x: .099609375, y: .0996093675, z: .892174125, w: .263267875}
   m_Materials:
   - {fileID: 2100000, guid: 2960c94b68c9640bcb45f83b1ab692bc, type: 2}
   m_SubsetIndices: 
@@ -938,7 +938,7 @@ Renderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 0
-  m_LightmapTilingOffset: {x: .099609375, y: .0996093675, z: .892174125, w: .263267875}
+  m_LightmapTilingOffset: {x: .099609375, y: .0996093675, z: .791588187, w: .263267875}
   m_Materials:
   - {fileID: 2100000, guid: d6a4a9a4e63b84481a818195cfa4052c, type: 2}
   m_SubsetIndices: 
