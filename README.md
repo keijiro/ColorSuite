@@ -40,7 +40,7 @@ It's recommended to use with these features.
 
 Math operations used in the white balance adjustment is relatively complex
 even if the effect is very subtle. It should be kept untouched (or set to
-zero) whenever not needed.
+zero) if not needed.
 
 #### Use dithering if banding
 
