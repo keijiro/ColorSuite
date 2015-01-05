@@ -6,7 +6,7 @@ ColorSuite
 *ColorSuite* is an image effect for Unity, which manages multiple color
 adjustment tasks in a single component. These tasks are implemented in a single
 pass shader, and it automatically strips out unused functions from the shader to
-keep the best performance in any configurations.
+keep the best performance for any configurations.
 
 ![Screenshot 2][Screen2]
 
@@ -44,9 +44,9 @@ zero) if not needed.
 
 #### Use dithering if banding
 
-Dithering is used to avoid color banding which occurs in low contrast situations
-(see the example below). In other words, it should be turned off unless there is
-any noticeable banding.
+Dithering is used to avoid color banding which occurs with very low contrast
+gradients (see the example below). In other words, it should be turned off
+unless there is any noticeable banding.
 
 ![Dither][Dither]
 
