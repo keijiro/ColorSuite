@@ -177,7 +177,7 @@ Shader "Hidden/ColorSuite"
 
     float3 dither(float2 uv)
     {
-        return float3(interleaved_gradient(uv / _MainTex_TexelSize) / 255);
+        return (float3)(interleaved_gradient(uv / _MainTex_TexelSize) / 255);
     }
 
 #endif
@@ -193,8 +193,8 @@ Shader "Hidden/ColorSuite"
 
     float3 dither(float2 uv)
     {
-        float r = nrand(uv) + nrand(uv + float2(1.1)) - 0.5;
-        return float3(r / 255);
+        float r = nrand(uv) + nrand(uv + (float2)1.1) - 0.5;
+        return (float3)(r / 255);
     }
 
 #endif
