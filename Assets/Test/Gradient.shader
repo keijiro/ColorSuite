@@ -40,15 +40,15 @@ float4 frag(v2f_img i) : SV_Target
 
     if (v < 0.1)
     {
-        rgb = srgb_to_linear(float3(u));
+        rgb = srgb_to_linear((float3)u);
     }
     else if (v < 0.2)
     {
-        rgb = float3(u);
+        rgb = (float3)u;
     }
     else if (v < 0.3)
     {
-        rgb = float3(u * 2);
+        rgb = (float3)(u * 2);
     }
     else if (v < 0.65)
     {

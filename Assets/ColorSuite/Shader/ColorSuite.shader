@@ -151,7 +151,7 @@ Shader "Hidden/ColorSuite"
 
     float3 apply_saturation(float3 c)
     {
-        return lerp(float3(luma(c)), c, _Saturation);
+        return lerp((float3)luma(c), c, _Saturation);
     }
 
     // RGB curves.
