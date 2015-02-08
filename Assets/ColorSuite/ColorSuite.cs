@@ -86,7 +86,7 @@ public class ColorSuite : MonoBehaviour
         set { _cCurve = value; UpdateLUT(); }
     }
 
-    // Dithering options.
+    // Dithering.
     public enum DitherMode { Off, Ordered, Triangular  }
     [SerializeField] DitherMode _ditherMode = DitherMode.Off;
 
@@ -110,7 +110,7 @@ public class ColorSuite : MonoBehaviour
 
     #region Local Functions
 
-    // RGBM (semi-HDR) encoding.
+    // RGBM encoding.
     static Color EncodeRGBM(float r, float g, float b)
     {
         var a = Mathf.Max(Mathf.Max(r, g), Mathf.Max(b, 1e-6f));
@@ -118,9 +118,9 @@ public class ColorSuite : MonoBehaviour
         return new Color(r / a, g / a, b / a, a);
     }
 
-    // An analytical model of chromaticity of the standard illuminant by Judd et al.
+    // An analytical model of chromaticity of the standard illuminant, by Judd et al.
     // http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D
-    // Slightly modifed to adjust it with D65 white point (x=0.31271, y=0.32902).
+    // Slightly modifed to adjust it with the D65 white point (x=0.31271, y=0.32902).
     static float StandardIlluminantY(float x)
     {
         return 2.87f * x - 3.0f * x * x - 0.27509507f;
@@ -145,8 +145,8 @@ public class ColorSuite : MonoBehaviour
 
     #region Private Methods
 
-    // Initialize the resources if it needs.
-    void SetUpResources()
+    // Set up the temporary assets.
+    void Setup()
     {
         if (_material == null)
         {
@@ -180,7 +180,7 @@ public class ColorSuite : MonoBehaviour
     // Calculate the color balance coefficients.
     Vector3 CalculateColorBalance()
     {
-        // Get CIE xy chromaticity of the reference white point.
+        // Get the CIE xy chromaticity of the reference white point.
         // Note: 0.31271 = x value on the D65 white point
         var x = 0.31271f - _colorTemp * (_colorTemp < 0.0f ? 0.1f : 0.05f);
         var y = StandardIlluminantY(x) + _colorTint * 0.05f;
@@ -197,18 +197,18 @@ public class ColorSuite : MonoBehaviour
 
     void Start()
     {
-        SetUpResources();
+        Setup();
     }
 
     void OnValidate()
     {
-        SetUpResources();
+        Setup();
         UpdateLUT();
     }
 
     void Reset()
     {
-        SetUpResources();
+        Setup();
         UpdateLUT();
     }
 
@@ -216,7 +216,7 @@ public class ColorSuite : MonoBehaviour
     {
         var linear = QualitySettings.activeColorSpace == ColorSpace.Linear;
 
-        SetUpResources();
+        Setup();
 
         if (linear)
             _material.EnableKeyword("COLORSPACE_LINEAR");

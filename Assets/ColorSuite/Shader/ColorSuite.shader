@@ -32,7 +32,7 @@ Shader "Hidden/ColorSuite"
     
     CGINCLUDE
 
-    // Multi compilation options.
+    // Multi-compilation options.
     #pragma multi_compile COLORSPACE_SRGB COLORSPACE_LINEAR
     #pragma multi_compile BALANCING_OFF BALANCING_ON
     #pragma multi_compile TONEMAPPING_OFF TONEMAPPING_ON
@@ -66,8 +66,8 @@ Shader "Hidden/ColorSuite"
 
 #if BALANCING_ON
 
-    // Color space conversion between linear RGB and LMS.
-    // Based on the CIECAM02 model (CAT02).
+    // Color space conversion between linear RGB and LMS
+    // based on the CIECAM02 model (CAT02).
     // http://en.wikipedia.org/wiki/LMS_color_space#CAT02
 
     float3 lrgb_to_lms(float3 c)
@@ -91,20 +91,20 @@ Shader "Hidden/ColorSuite"
     }
 
     // Color balance function.
-    // - Gamma compression/expansion in this function are not
-    //   sRGB-Linear conversion. It's an intentional design.
+    // - The gamma compression/expansion equation used in this function
+    //   differs from the standard sRGB-Linear conversion.
 
     float3 apply_balance(float3 c)
     {
 #if !COLORSPACE_LINEAR
-        // Gamma expansion before applying the color balance.
+        // Do the gamma expansion before applying the color balance.
         c = pow(c, 2.2);
 #endif
 
         // Apply the color balance in the LMS color space.
         c = lms_to_lrgb(lrgb_to_lms(c) * _Balance);
 
-        // It may return minus RGB value and it should be cropped out.
+        // It may return a minus value, which should be cropped out.
         c = max(c, 0.0);
 
 #if !COLORSPACE_LINEAR
@@ -166,7 +166,7 @@ Shader "Hidden/ColorSuite"
 
 #if DITHER_ORDERED
 
-    // Interleaved gradient function
+    // Interleaved gradient function from CoD AW.
     // http://www.iryoku.com/next-generation-post-processing-in-call-of-duty-advanced-warfare
 
     float interleaved_gradient(float2 uv)
@@ -210,7 +210,7 @@ Shader "Hidden/ColorSuite"
 
 #if COLORSPACE_LINEAR
 #if TONEMAPPING_ON
-        // Apply tone mapping.
+        // Apply the tone mapping.
         rgb = tone_mapping(rgb);
 #else
         // Convert the color into the sRGB color space.
