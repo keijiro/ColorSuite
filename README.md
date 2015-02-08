@@ -3,10 +3,10 @@ ColorSuite
 
 ![Screenshot 1][Screen1]
 
-*ColorSuite* is an image effect for Unity, which manages multiple color
-adjustment tasks in a single component. These tasks are implemented in a single
-pass shader, and it automatically strips out unused functions from the shader to
-keep the best performance for any configurations.
+*ColorSuite* is a color correction plugin for Unity, which manages multiple
+color adjustment tasks in the single component. These tasks are implemented in
+the single pass shader, and it automatically strips out unused functions from
+the shader to keep the best performance under any configurations.
 
 ![Screenshot 2][Screen2]
 
@@ -21,12 +21,6 @@ Features
 - Tone curves (individual RGB channels and RGB-combined)
 - Dithering (ordered dither or triangular PDF dither)
 
-The ColorSuite component has a box at the bottom of the inspector, and it shows
-the list of functions that are currently activated. It's useful to know how the
-shader works for the current configuration.
-
-![Inspector][Inspector]
-
 Usage Note
 ----------
 
@@ -34,19 +28,13 @@ Usage Note
 
 The ColorSuite shader is designed to work for any configuration, but specially
 optimized for the combination of the HDR rendering and the linear lighting.
-It's recommended to use with these features.
-
-#### White balancing is complex
-
-Math operations used in the white balance adjustment is relatively complex
-even if the effect is very subtle. It should be kept untouched (or set to
-zero) if not needed.
+It's recommended to use with these options.
 
 #### Use dithering if banding
 
-Dithering is used to avoid color banding which occurs with very low contrast
-gradients (see the example below). In other words, it should be turned off
-unless there is any noticeable banding.
+Dithering is used to avoid color banding which occurs only with very low
+contrast gradients (see the example below). In other words, it should be
+turned off unless there is noticeable banding.
 
 ![Dither][Dither]
 
