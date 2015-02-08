@@ -98,37 +98,6 @@ public class ColorSuiteEditor : Editor
 
         EditorGUILayout.PropertyField(propDitherMode);
 
-        if (targets.Length == 1)
-            EditorGUILayout.HelpBox(ShowInfo(), MessageType.None);
-
         serializedObject.ApplyModifiedProperties();
-    }
-
-    string ShowInfo()
-    {
-        var cs = target as ColorSuite;
-        var text = "Current Pipeline: [Texture Fetch] - ";
-        var linear = (QualitySettings.activeColorSpace == ColorSpace.Linear);
-
-        if (cs.colorTemp != 0.0f || cs.colorTint != 0.0f)
-            text += "[RGB to LMS] - [White Balance] - [LMS to RGB] - ";
-
-        if (cs.toneMapping)
-            text += "[Tone Mapping (Hable)] - ";
-        else if (linear)
-            text += "[Gamma Compression] - ";
-
-        text += "[Saturation] - ";
-        text += "[Curves] - ";
-
-        if (cs.ditherMode == ColorSuite.DitherMode.Ordered)
-            text += "[Dither (Ordered)] - ";
-        else if (cs.ditherMode == ColorSuite.DitherMode.Triangular)
-            text += "[Dither (Triangular)] - ";
-
-        if (linear)
-            text += "[Gamma Expansion] - ";
-
-        return text + "[Output]";
     }
 }
