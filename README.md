@@ -3,10 +3,11 @@ ColorSuite
 
 ![Screenshot 1][Screen1]
 
-*ColorSuite* is a color correction plugin for Unity, which manages multiple
-color adjustment tasks in the single component. These tasks are implemented in
-the single pass shader, and it automatically strips out unused functions from
-the shader to keep the best performance under any configurations.
+*ColorSuite* is a multifunctional color adjustment plugin for Unity, which
+manages multiple color adjustment tasks in the single component. These tasks
+are implemented in the single pass shader, and it automatically strips out
+unused functions from the shader to keep the best performance under any
+configurations.
 
 ![Screenshot 2][Screen2]
 
@@ -27,14 +28,14 @@ Usage Note
 #### HDR rendering and linear lighting
 
 The ColorSuite shader is designed to work for any configuration, but specially
-optimized for the combination of the HDR rendering and the linear lighting.
-It's recommended to use with these options.
+optimized for the combination of HDR rendering and linear lighting. It's
+recommended to enable these options.
 
 #### Use dithering if banding
 
-Dithering is used to avoid color banding which occurs only with very low
+Dithering is used to avoid color banding, which occurs only with very low
 contrast gradients (see the example below). In other words, it should be
-turned off unless there is noticeable banding.
+turned off if no banding is present.
 
 ![Dither][Dither]
 
