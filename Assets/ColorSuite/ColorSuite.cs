@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (C) 2014, 2015 Keijiro Takahashi
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -24,7 +24,7 @@ using System.Collections;
 [ExecuteInEditMode]
 [ImageEffectTransformsToLDR]
 [RequireComponent(typeof(Camera))]
-[AddComponentMenu("Image Effects/Color Adjustments/Color Suite")]
+[AddComponentMenu("Image Effects/Color Suite")]
 public class ColorSuite : MonoBehaviour
 {
     #region Public Properties
@@ -95,6 +95,16 @@ public class ColorSuite : MonoBehaviour
         set { _ditherMode = value; }
     }
 
+    // Sharpen.
+    [SerializeField] bool _sharpen = false;
+
+    public bool sharpen {
+        get { return _sharpen; }
+        set { _sharpen = value; }
+    }
+
+    [SerializeField] float _strength = 1f;
+    [SerializeField] float _clamp = 0.1f;
     #endregion
 
     #region Internal Properties
@@ -257,7 +267,19 @@ public class ColorSuite : MonoBehaviour
             _material.DisableKeyword("DITHER_ORDERED");
             _material.DisableKeyword("DITHER_TRIANGULAR");
         }
-
+        if (_sharpen)
+        {
+            _material.EnableKeyword("SHARPEN_ON");
+            _material.SetFloat("_PX", 1.0f / (float)Screen.width);
+            _material.SetFloat("_PY", 1.0f / (float)Screen.height);
+            _material.SetFloat("_Strength", _strength);
+            _material.SetFloat("_Clamp", _clamp);
+        }
+        else
+        {
+            _material.DisableKeyword("SHARPEN_ON");
+        }
+               
         Graphics.Blit(source, destination, _material);
     }
 
