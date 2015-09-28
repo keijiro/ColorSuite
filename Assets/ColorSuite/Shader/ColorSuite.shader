@@ -37,6 +37,7 @@ Shader "Hidden/ColorSuite"
     #pragma multi_compile BALANCING_OFF BALANCING_ON
     #pragma multi_compile TONEMAPPING_OFF TONEMAPPING_ON
     #pragma multi_compile DITHER_OFF DITHER_ORDERED DITHER_TRIANGULAR
+    #pragma multi_compile SHARPEN_OFF SHARPEN_ON
 
     #include "UnityCG.cginc"
     
@@ -46,6 +47,10 @@ Shader "Hidden/ColorSuite"
     float _Exposure;
     float _Saturation;
     float4 _Balance;
+    half _PX;
+    half _PY;
+    half _Strength;
+    half _Clamp;
 
 #if COLORSPACE_LINEAR
 
@@ -231,6 +236,18 @@ Shader "Hidden/ColorSuite"
 #if COLORSPACE_LINEAR
         // Take the color back into the linear color space.
         rgb = srgb_to_linear(rgb);
+#endif
+
+#if SHARPEN_ON
+        half2 coords = i.uv;
+        half4 blur  = tex2D(_MainTex, coords + half2(0.5 * _PX, -_PY));
+        blur += tex2D(_MainTex, coords + half2(-_PX, 0.5 * -_PY));
+        blur += tex2D(_MainTex, coords + half2(_PX, 0.5 * _PY));
+        blur += tex2D(_MainTex, coords + half2(0.5 * -_PX, _PY));
+        blur /= 4;
+        half4 lumaStrength = half4(0.2126, 0.7152, 0.0722, 0) * _Strength * 0.666;
+        half4 sharp = source - blur;
+        rgb += clamp(dot(sharp, lumaStrength), -_Clamp, _Clamp);
 #endif
 
         return float4(rgb, source.a);
