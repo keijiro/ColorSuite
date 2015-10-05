@@ -28,6 +28,7 @@ Shader "Hidden/ColorSuite"
         _Exposure   ("-", Float) = 1.0
         _Saturation ("-", Float) = 1.0
         _Balance    ("-", Vector) = (1, 1, 1, 0)
+        _Fade       ("-", Color) = (0, 0, 0, 0)
     }
     
     CGINCLUDE
@@ -46,6 +47,7 @@ Shader "Hidden/ColorSuite"
     float _Exposure;
     float _Saturation;
     float4 _Balance;
+    half4 _Fade;
 
 #if COLORSPACE_LINEAR
 
@@ -233,6 +235,9 @@ Shader "Hidden/ColorSuite"
         rgb = srgb_to_linear(rgb);
 #endif
 
+        // Fade to color.
+        rgb = lerp(rgb, _Fade.rgb, _Fade.a);
+
         return float4(rgb, source.a);
     }
 
@@ -246,7 +251,6 @@ Shader "Hidden/ColorSuite"
             Fog { Mode off }      
             CGPROGRAM
             #pragma target 3.0
-            #pragma glsl
             #pragma vertex vert_img
             #pragma fragment frag
             ENDCG

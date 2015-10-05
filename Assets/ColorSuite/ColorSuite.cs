@@ -86,6 +86,14 @@ public class ColorSuite : MonoBehaviour
         set { _cCurve = value; UpdateLUT(); }
     }
 
+    // Fade to color.
+    [SerializeField] Color _fadeColor = new Color(0, 0, 0, 0);
+
+    public Color fadeColor {
+        get { return _fadeColor; }
+        set { _fadeColor = value; }
+    }
+
     // Dithering.
     public enum DitherMode { Off, Ordered, Triangular  }
     [SerializeField] DitherMode _ditherMode = DitherMode.Off;
@@ -257,6 +265,8 @@ public class ColorSuite : MonoBehaviour
             _material.DisableKeyword("DITHER_ORDERED");
             _material.DisableKeyword("DITHER_TRIANGULAR");
         }
+
+        _material.SetColor("_Fade", _fadeColor);
 
         Graphics.Blit(source, destination, _material);
     }

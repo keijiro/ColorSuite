@@ -38,10 +38,13 @@ public class ColorSuiteEditor : Editor
     SerializedProperty propBCurve;
     SerializedProperty propCCurve;
 
+    SerializedProperty propFadeColor;
+
     SerializedProperty propDitherMode;
 
     GUIContent labelColorTemp;
     GUIContent labelColorTint;
+    GUIContent labelFadeColor;
 
     void OnEnable()
     {
@@ -58,10 +61,13 @@ public class ColorSuiteEditor : Editor
         propBCurve = serializedObject.FindProperty("_bCurve");
         propCCurve = serializedObject.FindProperty("_cCurve");
 
+        propFadeColor = serializedObject.FindProperty("_fadeColor");
+
         propDitherMode = serializedObject.FindProperty("_ditherMode");
 
         labelColorTemp = new GUIContent("Color Temperature");
         labelColorTint = new GUIContent("Tint (green-purple)");
+        labelFadeColor = new GUIContent("Fade To Color");
     }
 
     public override void OnInspectorGUI()
@@ -93,6 +99,10 @@ public class ColorSuiteEditor : Editor
         EditorGUILayout.PropertyField(propBCurve, GUIContent.none, doubleHeight);
         EditorGUILayout.PropertyField(propCCurve, GUIContent.none, doubleHeight);
         EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(propFadeColor, labelFadeColor);
 
         EditorGUILayout.Space();
 
