@@ -12,14 +12,19 @@ QualitySettings:
     shadows: 2
     shadowResolution: 3
     shadowProjection: 1
-    shadowCascades: 2
+    shadowCascades: 4
     shadowDistance: 30
+    shadowNearPlaneOffset: 2
+    shadowCascade2Split: .333333343
+    shadowCascade4Split: {x: .0666666701, y: .199999988, z: .466666639}
     blendWeights: 2
     textureQuality: 0
     anisotropicTextures: 1
     antiAliasing: 0
     softParticles: 0
     softVegetation: 1
+    realtimeReflectionProbes: 0
+    billboardsFaceCameraPosition: 0
     vSyncCount: 1
     lodBias: 1
     maximumLODLevel: 0
@@ -39,6 +44,7 @@ QualitySettings:
     Tizen: 2
     WP8: 3
     Web: 0
+    WebGL: 0
     Windows Store Apps: 3
     XBOX360: 3
     XboxOne: 3
