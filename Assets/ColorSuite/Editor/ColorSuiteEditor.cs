@@ -31,6 +31,10 @@ public class ColorSuiteEditor : Editor
     SerializedProperty propToneMapping;
     SerializedProperty propExposure;
 
+    SerializedProperty propSharpen;
+    SerializedProperty propSharpenStrength;
+    SerializedProperty propClamp;
+
     SerializedProperty propSaturation;
 
     SerializedProperty propRCurve;
@@ -50,6 +54,10 @@ public class ColorSuiteEditor : Editor
 
         propToneMapping = serializedObject.FindProperty("_toneMapping");
         propExposure    = serializedObject.FindProperty("_exposure");
+
+        propSharpen         = serializedObject.FindProperty("_sharpen");
+        propSharpenStrength = serializedObject.FindProperty("_strength");
+        propClamp           = serializedObject.FindProperty("_clamp");
 
         propSaturation = serializedObject.FindProperty("_saturation");
 
@@ -74,6 +82,15 @@ public class ColorSuiteEditor : Editor
             EditorGUILayout.Slider(propExposure, 0, 5);
             if (QualitySettings.activeColorSpace != ColorSpace.Linear)
                 EditorGUILayout.HelpBox("Linear space lighting should be enabled for tone mapping.", MessageType.Warning);
+        }
+
+        EditorGUILayout.Space();
+
+        EditorGUILayout.PropertyField(propSharpen);
+        if (propSharpen.hasMultipleDifferentValues || propSharpen.boolValue)
+        {
+            EditorGUILayout.Slider(propSharpenStrength, 0, 5);
+            EditorGUILayout.Slider(propClamp, 0, 1);
         }
 
         EditorGUILayout.Space();
